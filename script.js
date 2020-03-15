@@ -37,30 +37,54 @@ $(document).ready(function() {
   }
   // END makeRow function - called by searchWeather function to add list items to .history ul
 
+  // getAPIQueryStringFunction()
+  function getAPIQueryStringFunction(searchValue, searchType){
+
+    // declare queryString variable
+    var queryString = "";
+
+    // START IF searchValue is a 5-digit number
+    if (typeof(parseInt(searchValue)) == "number" && searchValue.length == 5){
+      //create queryString that calls API by ZIP
+      queryString = "https://api.openweathermap.org/data/2.5/"+searchType+"?zip=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial";
+      console.log("ZIP");
+    }
+    // ELSE
+    else{
+      // create queryString that calls API by city name
+      queryString = "https://api.openweathermap.org/data/2.5/"+searchType+"?q=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial"
+      console.log("City Name")
+    }
+    // END IF searchValue is a 5-digit number
+
+    return queryString;
+  }
+
   // START searchWeather function - calls weather API and appends elements to #today div
   function searchWeather(searchValue) {
+
     // START searchWeather api via ajax
     $.ajax({
       //use GET to return api data
       type: "GET",
       //queryString url
-      url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial",
+      url: getAPIQueryStringFunction(searchValue, "weather"),
       //data return will be in json format
       dataType: "json",
       // START anonymous callback function run on GET success
       success: function(data) {
 
         // START IF the current city name does not already exist in the history array 
-        if (history.indexOf(searchValue) === -1) {
+        if (history.indexOf(data.name) === -1) {
           
           // create history link for this search
-          history.push(searchValue);
+          history.push(data.name);
 
           // stringify an array called history in local storage
           window.localStorage.setItem("history", JSON.stringify(history));
     
           // call makeRow function to add current city name to #history ul as list items
-          makeRow(searchValue);
+          makeRow(data.name);
 
         }
         // END IF the current city name does not already exist in the history array
@@ -81,7 +105,7 @@ $(document).ready(function() {
         // create div ta with .card-body as bootstrap class
         var cardBody = $("<div>").addClass("card-body");
         // create img tag with src as icon from API response
-        var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+        var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
 
         // add weather icon to city name h3
         title.append(img);
@@ -113,7 +137,7 @@ $(document).ready(function() {
       // API request gets information
       type: "GET",
       // queryString URL for API request
-      url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial",
+      url: getAPIQueryStringFunction(searchValue,"forecast"),
       // API request returned in json format
       dataType: "json",
 
@@ -140,7 +164,7 @@ $(document).ready(function() {
             var title = $("<h5>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
 
             // create an img element with a weather icon from the API response
-            var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+            var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
 
             // create a p element as a bootstrap card text for the card component with temperature from the API response
             var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max + " °F");
