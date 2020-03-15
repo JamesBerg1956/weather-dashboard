@@ -81,7 +81,7 @@ $(document).ready(function() {
         // create div ta with .card-body as bootstrap class
         var cardBody = $("<div>").addClass("card-body");
         // create img tag with src as icon from API response
-        var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
+        var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
 
         // add weather icon to city name h3
         title.append(img);
@@ -140,7 +140,7 @@ $(document).ready(function() {
             var title = $("<h5>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
 
             // create an img element with a weather icon from the API response
-            var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
+            var img = $("<img>").attr("src", "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
 
             // create a p element as a bootstrap card text for the card component with temperature from the API response
             var p1 = $("<p>").addClass("card-text").text("Temp: " + data.list[i].main.temp_max + " °F");
