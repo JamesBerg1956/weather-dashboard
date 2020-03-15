@@ -44,7 +44,7 @@ $(document).ready(function() {
       //use GET to return api data
       type: "GET",
       //queryString url
-      url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial",
+      url: "https://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial",
       //data return will be in json format
       dataType: "json",
       // START anonymous callback function run on GET success
@@ -113,7 +113,7 @@ $(document).ready(function() {
       // API request gets information
       type: "GET",
       // queryString URL for API request
-      url: "http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial",
+      url: "https://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=600327cb1a9160fea2ab005509d1dc6d&units=imperial",
       // API request returned in json format
       dataType: "json",
 
@@ -170,7 +170,7 @@ $(document).ready(function() {
       // API request gets information
       type: "GET",
       // queryString URL for API request
-      url: "http://api.openweathermap.org/data/2.5/uvi?appid=600327cb1a9160fea2ab005509d1dc6d&lat=" + lat + "&lon=" + lon,
+      url: "https://api.openweathermap.org/data/2.5/uvi?appid=600327cb1a9160fea2ab005509d1dc6d&lat=" + lat + "&lon=" + lon,
       // API request returned in json format
       dataType: "json",
 
